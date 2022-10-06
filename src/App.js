@@ -1,9 +1,7 @@
+import { Register, Home, Login } from './container';
+
 function App() {
-  return (
-    <div>
-      Hello world!
-    </div>
-  );
+  return <Register />;
 }
 
 export default App;
