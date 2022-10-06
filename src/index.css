@@ -3,7 +3,7 @@
 :root {
   --font-base: 'DM Sans', sans-serif;
 
-  --primary-color: #e7edf4;
+  --primary-color: #2e3a4c;
   --secondary-color: #df6420;
   --black-color: #030303;
   --lightGray-color: #e4e4e4;
@@ -17,6 +17,7 @@
   padding: 0;
   margin: 0;
   scroll-behavior: smooth;
+  font-family: var(--font-base);
 }
 
 img {

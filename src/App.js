@@ -1,7 +1,7 @@
 import { Register, Home, Login } from './container';
 
 function App() {
-  return <Register />;
+  return <Home />;
 }
 
 export default App;
