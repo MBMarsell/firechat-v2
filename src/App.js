@@ -1,7 +1,12 @@
-import { Register, Home, Login } from './container';
+import { Register, Home } from './container';
 
 function App() {
-  return <Home />;
+  return (
+    <>
+      <Register />
+      <Home />
+    </>
+  );
 }
 
 export default App;

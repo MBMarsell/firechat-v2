@@ -1,0 +1,102 @@
+.home {
+  background-color: var(--primary-color);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .home__container {
+    background: rgba(223, 100, 32, 0.4);
+    border-radius: 16px;
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+    backdrop-filter: blur(6.2px);
+    -webkit-backdrop-filter: blur(6.2px);
+    border: 1px solid rgba(223, 100, 32, 1);
+    width: 65%;
+    height: 80%;
+
+    display: flex;
+    overflow: hidden;
+
+    .sidebar {
+      flex: 1;
+      background-color: var(--grayDark-color);
+
+      .navbar {
+        display: flex;
+        align-items: center;
+        background-color: var(--black-color);
+        height: 50px;
+        padding: 10px;
+        justify-content: space-between;
+        color: var(--white-color);
+
+        .navbar__logo {
+          font-weight: bold;
+        }
+
+        .navbar__user {
+          display: flex;
+          gap: 10px;
+
+          img {
+            background-color: var(--white-color);
+            height: 24px;
+            width: 24px;
+            border-radius: 50%;
+            object-fit: cover;
+          }
+
+          button {
+            background-color: var(--white-color);
+            color: var(--black-color);
+            font-size: 10px;
+            padding: 5px 10px;
+            border: none;
+            cursor: pointer;
+          }
+        }
+      }
+    }
+    .search {
+      border-bottom: 1px solid var(--secondary-color);
+
+      .search__form {
+        padding: 10px;
+
+        input {
+          background-color: transparent;
+          border: none;
+          color: var(--white-color);
+          outline: none;
+
+          &::placeholder {
+            color: var(--gray-color);
+          }
+        }
+      }
+      .user__chat {
+        padding: 10px;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        color: var(--white-color);
+        cursor: pointer;
+
+        &:hover {
+          background-color: var(--gray-color);
+        }
+
+        img {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+    }
+    .chat {
+      flex: 2;
+    }
+  }
+}
