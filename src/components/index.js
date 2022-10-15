@@ -5,3 +5,4 @@ export { default as Input } from './Input';
 export { default as Sidebar } from './Sidebar';
 export { default as Search } from './Search';
 export { default as Message } from './Message';
+export { default as Messages } from './Messages';
