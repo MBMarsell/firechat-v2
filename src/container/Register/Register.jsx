@@ -1,15 +1,75 @@
-import React from 'react';
-import { BsPersonBoundingBox } from 'react-icons/bs';
+import React, { useState } from 'react';
 
+import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
+import { auth, storage, db } from '../../firebase';
+import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
+import { setDoc, doc } from 'firebase/firestore';
+import { useNavigate, Link } from 'react-router-dom';
+
+import { BsPersonBoundingBox } from 'react-icons/bs';
 import './Register.scss';
 
 const Register = () => {
+  const [error, setError] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [navigate] = useNavigate();
+
+  const handleSubmit = async e => {
+    setLoading(true);
+    e.preventDefault();
+    const displayName = e.target[0];
+    const email = e.target[1];
+    const password = e.target[2];
+    const file = e.target[3].files[0];
+
+    try {
+      //Create user
+      const res = await createUserWithEmailAndPassword(auth, email, password);
+
+      //Create a unique image name
+      const date = new Date().getTime();
+      const storageRef = ref(storage, `${displayName + date}`);
+
+      await uploadBytesResumable(storageRef, file).then(() => {
+        getDownloadURL(storageRef).then(async downloadURL => {
+          try {
+            //Update profile
+            await updateProfile(res.user, {
+              displayName,
+              photoURL: downloadURL,
+            });
+            //create user on firestore
+            await setDoc(doc(db, 'users', res.user.uid), {
+              uid: res.user.uid,
+              displayName,
+              email,
+              photoURL: downloadURL,
+            });
+
+            //create empty user chats on firestore
+            await setDoc(doc(db, 'userChats', res.user.uid), {});
+            navigate('/');
+          } catch (error) {
+            console.log(error);
+            setError(true);
+            setLoading(false);
+            console.log(error);
+          }
+        });
+      });
+    } catch (error) {
+      setError(true);
+      setLoading(false);
+      console.log(error);
+    }
+  };
+
   return (
     <div className="form__container">
       <div className="form__wrapper">
         <span className="form__logo">Firechat V2</span>
         <span className="form__name">Register</span>
-        <form>
+        <form onSubmit={handleSubmit}>
           <input type="text" placeholder="Display Name" />
           <input type="email" placeholder="E-mail" />
           <input type="password" placeholder="Password" />
@@ -20,9 +80,13 @@ const Register = () => {
             </div>
             <span>Add an avatar</span>
           </label>
-          <button>Sign Up</button>
+          <button disabled={loading}>Sign Up</button>
+          {loading && 'Uploading and compressing the image, please wait...'}
+          {error && <span>Something went wrong</span>}
         </form>
-        <p>Already have an account? Login!</p>
+        <p>
+          Already have an account? <Link to="/login">Login!</Link>{' '}
+        </p>
       </div>
     </div>
   );
