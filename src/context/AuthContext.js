@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { auth } from '../firebase';
 import { onAuthStateChanged } from 'firebase/auth';
 
@@ -10,6 +10,7 @@ export const AuthContextProvider = ({ children }) => {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, user => {
       setCurrentUser(user);
+      console.log(user);
     });
 
     return () => {
@@ -18,8 +19,8 @@ export const AuthContextProvider = ({ children }) => {
   }, []);
 
   return (
-    <AuthContextProvider value={{ currentUser }}>
+    <AuthContext.Provider value={{ currentUser }}>
       {children}
-    </AuthContextProvider>
+    </AuthContext.Provider>
   );
 };

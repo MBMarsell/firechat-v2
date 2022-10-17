@@ -7,21 +7,18 @@ import './Login.scss';
 
 const Login = () => {
   const [error, setError] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [navigate] = useNavigate();
 
   const handleSubmit = async e => {
-    setLoading(true);
     e.preventDefault();
-    const email = e.target[0];
-    const password = e.target[1];
+    const email = e.target[0].value;
+    const password = e.target[1].value;
 
     try {
       await signInWithEmailAndPassword(auth, email, password);
       navigate('/');
     } catch (error) {
       setError(true);
-      setLoading(false);
     }
   };
 

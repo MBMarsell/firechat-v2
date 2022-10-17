@@ -3,7 +3,7 @@ import React, { useState } from 'react';
 import { createUserWithEmailAndPassword, updateProfile } from 'firebase/auth';
 import { auth, storage, db } from '../../firebase';
 import { ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { setDoc, doc } from 'firebase/firestore';
+import { doc, setDoc } from 'firebase/firestore';
 import { useNavigate, Link } from 'react-router-dom';
 
 import { BsPersonBoundingBox } from 'react-icons/bs';
@@ -17,16 +17,16 @@ const Register = () => {
   const handleSubmit = async e => {
     setLoading(true);
     e.preventDefault();
-    const displayName = e.target[0];
-    const email = e.target[1];
-    const password = e.target[2];
+    const displayName = e.target[0].value;
+    const email = e.target[1].value;
+    const password = e.target[2].value;
     const file = e.target[3].files[0];
 
     try {
-      //Create user
+      //Create a user
       const res = await createUserWithEmailAndPassword(auth, email, password);
 
-      //Create a unique image name
+      //Create a unique user avatar name
       const date = new Date().getTime();
       const storageRef = ref(storage, `${displayName + date}`);
 
@@ -53,14 +53,12 @@ const Register = () => {
             console.log(error);
             setError(true);
             setLoading(false);
-            console.log(error);
           }
         });
       });
     } catch (error) {
       setError(true);
       setLoading(false);
-      console.log(error);
     }
   };
 
