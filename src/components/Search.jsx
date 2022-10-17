@@ -48,11 +48,11 @@ const Search = () => {
         : user.uid + currentUser.uid;
 
     try {
-      const res = await getDocs(db, 'chats', combineId);
+      const res = await getDoc(doc(db, 'chats', combineId));
 
       if (!res.exists()) {
         // Create chat in chats collection
-        await setDoc(doc, (db, 'chats', combineId), { messages: [] });
+        await setDoc(doc(db, 'chats', combineId), { messages: [] });
 
         // Create userChats
         await updateDoc(doc(db, 'userChats', currentUser.uid), {
@@ -63,10 +63,22 @@ const Search = () => {
           },
           [combineId + 'date']: serverTimestamp(),
         });
+
+        // Second user
+        await updateDoc(doc(db, 'userChats', user.uid), {
+          [combineId + '.userInfo']: {
+            uid: currentUser.uid,
+            displayName: currentUser.displayName,
+            photoURL: currentUser.photoURL,
+          },
+          [combineId + 'date']: serverTimestamp(),
+        });
       }
     } catch (error) {
       setError(true);
     }
+    setUser(null);
+    setUsername('');
   };
 
   return (
