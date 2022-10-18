@@ -27,6 +27,7 @@ const Message = ({ message }) => {
           }
           alt="message avatar"
         />
+        {/* TODO: Add date/time instead of "Just now" */}
         <span>Just now</span>
       </div>
       <div className="message__content">
