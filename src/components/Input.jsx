@@ -89,7 +89,6 @@ const Input = () => {
             cursor: 'pointer',
             color: 'var(--gray-color)',
           }}
-          onChange={e => setImage(e.target.files[0])}
         />
         <input
           type="file"
