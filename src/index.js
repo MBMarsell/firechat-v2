@@ -8,11 +8,11 @@ import './index.css';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <AuthContextProvider>
-    <ChatContextProvider>
-      <React.StrictMode>
+  <React.StrictMode>
+    <AuthContextProvider>
+      <ChatContextProvider>
         <App />
-      </React.StrictMode>
-    </ChatContextProvider>
-  </AuthContextProvider>
+      </ChatContextProvider>
+    </AuthContextProvider>
+  </React.StrictMode>
 );
